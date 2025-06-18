@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Firebase Login</title>
+  <style>
+    body {
+      font-family: Arial;
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+    }
+    input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #error-message {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Firebase Login</h2>
+
+  <input type="email" id="email-input" placeholder="Email" required>
+  <input type="password" id="password-input" placeholder="Password" required>
+  <button id="sign-in-button">Sign In</button><p style="text-align:center; margin-top: 15px;">
+  Do not have an account? <a href="signup.html">Sign in here</a>
+  </p>
+
+  <div id="error-message"></div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <script>
+    // Your Firebase config (replace with your own)
+    const firebaseConfig = {
+    apiKey: "AIzaSyD7ctsSMAe2MS9DItBbzDjTFzVnoauACZ4",
+    authDomain: "intelli-home-79cae.firebaseapp.com",
+    projectId: "intelli-home-79cae",
+    storageBucket: "intelli-home-79cae.firebasestorage.app",
+    messagingSenderId: "394281064188",
+    appId: "1:394281064188:web:ea944df259bd4633baa979",
+    measurementId: "G-DRBLL2T1NN"
+  };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // UI Elements
+    const emailInput = document.getElementById('email-input');
+    const passwordInput = document.getElementById('password-input');
+    const signInButton = document.getElementById('sign-in-button');
+    const errorMessage = document.getElementById('error-message');
+
+    // Sign in function
+    signInButton.addEventListener('click', () => {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log('User signed in:', user);
+          errorMessage.textContent = '';
+          alert('Sign-in successful!');
+          // Optional: Redirect
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          errorMessage.textContent = error.message;
+          console.error('Sign-in error:', error.code, error.message);
+        });
+    });
+  </script>
+
+</body>
+</html>

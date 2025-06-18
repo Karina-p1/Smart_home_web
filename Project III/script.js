@@ -47,6 +47,37 @@ client.on('error', (err) => {
   document.getElementById('status').style.color = 'red';
 });
 
+  // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  // import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+  // // TODO: Add SDKs for Firebase products that you want to use
+  // // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // // Your web app's Firebase configuration
+  // // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  // const firebaseConfig = {
+  //   apiKey: "AIzaSyD7ctsSMAe2MS9DItBbzDjTFzVnoauACZ4",
+  //   authDomain: "intelli-home-79cae.firebaseapp.com",
+  //   projectId: "intelli-home-79cae",
+  //   storageBucket: "intelli-home-79cae.firebasestorage.app",
+  //   messagingSenderId: "394281064188",
+  //   appId: "1:394281064188:web:ea944df259bd4633baa979",
+  //   measurementId: "G-DRBLL2T1NN"
+  // };
+
+  // // // Initialize Firebase
+  // // const app = initializeApp(firebaseConfig);
+  // // const analytics = getAnalytics(app);
+
+  // // Initialize Firebase
+  // firebase.initializeApp(firebaseConfig);
+
+  // // You can now get a reference to the Auth service
+  // const auth = firebase.auth();
+
+  // // Now you're ready to use the 'auth' object to sign users in/out!
+  // console.log("Firebase is initialized!");
+
+
 function toggleRelay(elem) {
   const id = elem.id;
   const state = elem.checked ? 'ON' : 'OFF';
@@ -310,19 +341,6 @@ function toggleRelay(elem, state = null) {
   client.publish(topic, JSON.stringify(relayState));
 }
 
-// Update window.onload to initialize voice control if supported
-window.onload = () => {
-  // Load theme
-  const theme = localStorage.getItem('theme');
-  if (theme === 'dark') {
-    document.body.classList.add('dark');
-  }
-
-  // Load schedules
-  loadSchedules();
-
-  // Check schedules every minute
-  setInterval(checkSchedules, 60000);
 
   // Check for speech recognition support
   if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
@@ -330,7 +348,6 @@ window.onload = () => {
     document.getElementById('voiceStatus').innerText = 
       'Voice control not supported in this browser. Try Chrome or Edge.';
   }
-};
 
 // Theme toggle functionality
 function toggleTheme() {
@@ -339,18 +356,5 @@ function toggleTheme() {
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
 
-// Initialize on load
-window.onload = () => {
-  // Load theme
-  const theme = localStorage.getItem('theme');
-  if (theme === 'dark') {
-    document.body.classList.add('dark');
-  }
 
-  // Load schedules
-  loadSchedules();
-
-  // Check schedules every minute
-  setInterval(checkSchedules, 60000);
-};
 

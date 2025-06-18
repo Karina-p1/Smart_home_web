@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Firebase Sign Up</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 2px 2px 12px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #2196F3;
+      color: white;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+    #signup-error-message {
+      margin-top: 10px;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Sign Up</h2>
+
+  <input type="email" id="signup-email-input" placeholder="Email" required>
+  <input type="password" id="signup-password-input" placeholder="Password (min 6 characters)" required>
+  <button id="signup-button">Create Account</button>
+  <p style="text-align:center; margin-top: 15px;">
+  Already have an account? <a href="login.html">Log in here</a>
+</p>
+  
+
+  <div id="signup-error-message"></div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <script>
+    // Replace with your Firebase project config
+      const firebaseConfig = {
+    apiKey: "AIzaSyD7ctsSMAe2MS9DItBbzDjTFzVnoauACZ4",
+    authDomain: "intelli-home-79cae.firebaseapp.com",
+    projectId: "intelli-home-79cae",
+    storageBucket: "intelli-home-79cae.firebasestorage.app",
+    messagingSenderId: "394281064188",
+    appId: "1:394281064188:web:ea944df259bd4633baa979",
+    measurementId: "G-DRBLL2T1NN"
+  };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // UI elements
+    const signupEmailInput = document.getElementById('signup-email-input');
+    const signupPasswordInput = document.getElementById('signup-password-input');
+    const signupButton = document.getElementById('signup-button');
+    const signupError = document.getElementById('signup-error-message');
+
+    // Sign-up handler
+    signupButton.addEventListener('click', () => {
+      const email = signupEmailInput.value.trim();
+      const password = signupPasswordInput.value.trim();
+
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log('New user created:', user);
+          signupError.textContent = '';
+          alert('Sign-up successful!');
+          // Optional: redirect to login or dashboard
+          window.location.href = "login.html";
+        })
+        .catch((error) => {
+          console.error('Sign-up error:', error.code, error.message);
+          signupError.textContent = error.message;
+        });
+    });
+  </script>
+
+</body>
+</html>
